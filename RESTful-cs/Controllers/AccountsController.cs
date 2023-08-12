@@ -43,24 +43,26 @@ namespace RESTful_cs.Controllers
 		{
 			Debug.WriteLine(account);
 			try
-			{
-				if (UsernameIsTaken(account))
-				{
-					StatusCode(200);
-					return "Username already registered";
-				}
+            {
+                if (UsernameIsTaken(account))
+                {
+                    StatusCode(200);
+                    return "Username already registered";
+                }
 
-				if (account.Username != null)
-				{
+                if (account.Username != null)
+                {
                     _db.Accounts.Add(new Account()
                     {
                         Username = account.Username,
                         Password = HashPassword(account.Password)
                     });
                     _db.SaveChanges();
-                } 
-				return $"success: {account.Username}";
-			} catch (Exception err)
+                    return $"success: {account.Username}";
+                }
+                return "Username was null";
+            }
+            catch (Exception err)
 			{
                 Debug.WriteLine(account.Username);
                 return (err.Message);
